@@ -24,7 +24,10 @@ void testWithRelation(){
 
     me.addDaughter(daughter);
     me.addSon(son);
+    
     me.displayInfo();
+    mother.displayInfo();
+    father.displayInfo();
 }
 
 int main(){

@@ -66,7 +66,7 @@ extern int assignID();
                 if(isMotherAssigned() || !mother.isFemale()) return false;
 
                 this->mother = &mother;
-                std::cout << "MOTHER WAS ASSIGNED AS:\t" << mother.name << "\n";
+                mother.addChild(this);
                 
                 return true;
             }
@@ -75,6 +75,7 @@ extern int assignID();
                 if(isFatherAssigned() || !father.isMale()) return false;
 
                 this->father = &father;
+                father.addChild(this);
                 return true;
             }
 
@@ -92,9 +93,18 @@ extern int assignID();
                 return true;
             }
 
+            bool addChild(GraphNode *child){
+                if (child->isUndefinedGender()) return false;
+                
+                if (child->isMale()) this->addSon(*child);
+                else this->addDaughter(*child);
+                
+                return true;
+            }
+
             bool isFemale(){ return (gender == 'f' || gender == 'F') ? true : false;}
             bool isMale(){ return (gender == 'm' || gender == 'M') ? true : false;}
-            bool isUndefinedGender(GraphNode &node){ return (node.gender == 'u' || node.gender == 'U') ? true : false;}
+            bool isUndefinedGender(){ return (gender == 'u' || gender == 'U') ? true : false;}
 
             bool isMotherAssigned(){return (mother != NULL) ?  true : false;}
             bool isFatherAssigned(){return (father != NULL) ?  true : false;}
