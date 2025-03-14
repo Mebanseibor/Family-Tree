@@ -5,8 +5,34 @@ extern int assignID();
     namespace graphnode
     {
         class GraphNode{
+            private:
+            bool addDaughter(GraphNode &daughter){
+                if(!daughter.isFemale() & !canBeParentToChild(daughter)) return false;
+
+                daughters.push_back(daughter);
+
+                return true;
+            }
+
+            bool addSon(GraphNode &son){
+                if(!son.isMale() && !canBeParentToChild(son)) return false;
+
+                sons.push_back(son);
+
+                return true;
+            }
+
+            bool addChild(GraphNode *child){
+                if (child->isUndefinedGender()) return false;
+                
+                if (child->isMale()) this->addSon(*child);
+                else this->addDaughter(*child);
+                
+                return true;
+            }
+
             public:
-            int id = -1;
+            unsigned int id;
             std::string name = "Default Name";
             char gender = 'U';
 
@@ -62,52 +88,19 @@ extern int assignID();
                 std::cout << "-----Info: " << name << " (END) -----\n";
             }
 
-            bool addMother(GraphNode &mother){
-                if(isMotherAssigned() || !mother.isFemale()) return false;
+            bool addParents(GraphNode &mother, GraphNode &father){
+                if(this->isUndefinedGender() || this->isMotherAssigned() || this->isFatherAssigned()) return false;
 
-                this->mother = &mother;
-                mother.addChild(this);
+                if(!this->isMotherAssigned()){
+                    this->mother = &mother;
+                    mother.addChild(this);
+                };
                 
-                return true;
-            }
+                if(!this->isFatherAssigned()){
+                    this->father = &father;
+                    father.addChild(this);
+                }
 
-            bool addFather(GraphNode &father){
-                if(isFatherAssigned() || !father.isMale()) return false;
-
-                this->father = &father;
-                father.addChild(this);
-                return true;
-            }
-
-            bool addSon(GraphNode &son){
-                if(!son.isMale() && !canBeParentToChild(son)) return false;
-
-                sons.push_back(son);
-
-                
-                if(this->isMale()){son.addFather(*this);}
-                if(this->isFemale()){son.addMother(*this);}
-
-                return true;
-            }
-            
-            bool addDaughter(GraphNode &daughter){
-                if(!daughter.isFemale() & !canBeParentToChild(daughter)) return false;
-
-                daughters.push_back(daughter);
-
-                if(this->isMale()){daughter.addFather(*this);}
-                if(this->isFemale()){daughter.addMother(*this);}
-
-                return true;
-            }
-
-            bool addChild(GraphNode *child){
-                if (child->isUndefinedGender()) return false;
-                
-                if (child->isMale()) this->addSon(*child);
-                else this->addDaughter(*child);
-                
                 return true;
             }
 

@@ -18,17 +18,18 @@ void testWithRelation(){
     GraphNode mother = GraphNode("Maria", 'f');
     GraphNode daughter = GraphNode("Dakira", 'f');
     GraphNode son = GraphNode("Sukani", 'm');
+    GraphNode wife = GraphNode("Wisa", 'f');
 
-    me.addMother(mother);
-    me.addFather(father);
-    me.addDaughter(daughter);
-    me.addSon(son);
+    me.addParents(mother, father);
+    daughter.addParents(wife, me);
+    son.addParents(wife, me);
     
     me.displayInfo();
     mother.displayInfo();
     father.displayInfo();
     son.displayInfo();
     daughter.displayInfo();
+    wife.displayInfo();
 }
 
 int main(){
