@@ -21,13 +21,14 @@ void testWithRelation(){
 
     me.addMother(mother);
     me.addFather(father);
-
     me.addDaughter(daughter);
     me.addSon(son);
     
     me.displayInfo();
     mother.displayInfo();
     father.displayInfo();
+    son.displayInfo();
+    daughter.displayInfo();
 }
 
 int main(){

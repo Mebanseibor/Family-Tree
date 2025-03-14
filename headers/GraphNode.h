@@ -80,16 +80,25 @@ extern int assignID();
             }
 
             bool addSon(GraphNode &son){
-                if(!son.isMale()) return false;
-                
+                if(!son.isMale() && !canBeParentToChild(son)) return false;
+
                 sons.push_back(son);
+
+                
+                if(this->isMale()){son.addFather(*this);}
+                if(this->isFemale()){son.addMother(*this);}
+
                 return true;
             }
             
             bool addDaughter(GraphNode &daughter){
-                if(!daughter.isFemale()) return false;
+                if(!daughter.isFemale() & !canBeParentToChild(daughter)) return false;
 
                 daughters.push_back(daughter);
+
+                if(this->isMale()){daughter.addFather(*this);}
+                if(this->isFemale()){daughter.addMother(*this);}
+
                 return true;
             }
 
@@ -110,6 +119,16 @@ extern int assignID();
             bool isFatherAssigned(){return (father != NULL) ?  true : false;}
             bool hasAnyDaughters(){return (daughters.size() > 0) ? true : false;}
             bool hasAnySons(){return (sons.size() > 0) ? true : false;}
+            bool canBeParentToChild(GraphNode &child){
+                if(this->isMale()){
+                    return (child.isFatherAssigned() && child.father->id != this->id) ? false : true;
+                }
+                else if(this->isFemale()){
+                    return (child.isMotherAssigned() && child.mother->id != this->id) ? false : true;
+                }
+
+                return false;
+            }
         };
     }
 #endif
