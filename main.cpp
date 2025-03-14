@@ -7,37 +7,28 @@
 int ID_COUNTER = 0;
 
 int assignID(){
-    std::cout << "assigned ID:\t" << ID_COUNTER << "\n";
     return ID_COUNTER++;
 }
 
-void test(){
-    Graph g = Graph("Graph A");
+void testWithRelation(){
+    Graph g = Graph("Family Tree");
 
-    GraphNode node0 = g.addNode(2);
-    GraphNode node1 = g.addNode(3);
-    g.addEdge(node0, node1);
-    
-    g.displayInfo();
+    GraphNode me = GraphNode("Barry", 'm');
+    GraphNode father = GraphNode("Frank", 'm');
+    GraphNode mother = GraphNode("Maria", 'f');
+    GraphNode daughter = GraphNode("Dakira", 'f');
+    GraphNode son = GraphNode("Sukani", 'm');
 
-    g.searchRelation(node0, node1);
-    
-    
-    GraphNode node2 = g.addNode(1);
-    GraphNode node3 = g.addNode(2);
-    g.searchRelation(node2, node3);
+    me.addMother(mother);
+    me.addFather(father);
 
-
-    g.addEdge(node1, node2);
-    g.displayInfo();
-
-    g.searchRelation(node0, node1);
-    g.searchRelation(node1, node2);
-    g.searchRelation(node2, node1);
+    me.addDaughter(daughter);
+    me.addSon(son);
+    me.displayInfo();
 }
 
 int main(){
-    test();
+    testWithRelation();
     
     return 0;
 }

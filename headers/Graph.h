@@ -37,12 +37,6 @@
         
             void addNode(GraphNode node){nodes.push_back(node);}
             
-            GraphNode addNode(int value){
-                GraphNode node = GraphNode(value);
-                nodes.push_back(node);
-                return node;
-            }
-            
             GraphNode addNode(){
                 GraphNode node = GraphNode();
                 nodes.push_back(node);
