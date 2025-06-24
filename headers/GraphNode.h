@@ -36,8 +36,8 @@ extern int assignID();
             std::string name = "Default Name";
             char gender = 'U';
 
-            GraphNode* mother = NULL;
-            GraphNode* father = NULL;
+            GraphNode* mother = nullptr;
+            GraphNode* father = nullptr;
             std::vector<GraphNode> daughters = {};
             std::vector<GraphNode> sons = {};
         
@@ -104,9 +104,16 @@ extern int assignID();
                 return true;
             }
 
-            bool isFemale(){ return (gender == 'f' || gender == 'F') ? true : false;}
-            bool isMale(){ return (gender == 'm' || gender == 'M') ? true : false;}
-            bool isUndefinedGender(){ return (gender == 'u' || gender == 'U') ? true : false;}
+            std::string getStringGender() {
+                return isFemale() ? "Female" : isMale() ? "Male" : "NULL";
+            }
+
+            std::string getStringFather(){ return isFatherAssigned() ? father->name : "NULL"; }
+            std::string getStringMother(){ return isMotherAssigned() ? mother->name : "NULL"; }
+
+            bool isFemale(){ return (gender == 'f' || gender == 'F') ? true : false; }
+            bool isMale(){ return (gender == 'm' || gender == 'M') ? true : false; }
+            bool isUndefinedGender(){ return (gender == 'u' || gender == 'U') ? true : false; }
 
             bool isMotherAssigned(){return (mother != NULL) ?  true : false;}
             bool isFatherAssigned(){return (father != NULL) ?  true : false;}
