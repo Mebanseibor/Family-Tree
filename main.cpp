@@ -49,8 +49,17 @@ void testCreateRelations(Graph& g){
 
     std::cout << "\nCreating the relations:\n";
     g.assignParents(base, mother, father);
-    g.assignParents(daughter, wife, base);
-    g.assignParents(son, wife, base);
+    std::cout << "\n";
+    g.assignParents("Dakira", "Wisa", "Barry");
+    std::cout << "\n";
+    g.assignParents("Sukani", "Wisa", "Barry");
+    std::cout << "\n";
+
+    // should re errors
+    g.assignParents("Sukani", "Wisa", "Dummy");
+    std::cout << "\n";
+    g.assignParents("Sukani", "Barry", "Wisa");
+    std::cout << "\n";
 
     g.displayDetails();
     std::cout << "--- Test Create Relations (END) ---\n\n\n";
@@ -71,6 +80,25 @@ void testSearching(Graph& g){
     std::cout << "--- Test Searching (END) ---\n\n\n";
 }
 
+void testInputChild(Graph& g){
+    std::cout << "--- Test Input Child (START) ---\n";
+
+    if(g.promptExit("Enter anything to continue, enter -1 to skip the test \"Input Child\": "))
+        std::cout << "Skipping the test \"Input Child\"\n";
+    else{
+        do{
+            if(!g.inputChild()) break;
+            std::cout << "\n";
+
+            if(g.promptExit("Enter anything to continue, enter -1 to exit to finish inputting children: ")) break;
+        }while(true);
+
+        g.displayDetails();
+    };
+    std::cout << "--- Test Input Child (END) ---\n\n\n";
+}
+
+// template test function
 void test(Graph& g){
     std::cout << "--- Test (START) ---\n";
 
@@ -86,6 +114,7 @@ int main(){
     testDisplayGraph(g);
     testSearching(g);
     testCreateRelations(g);
+    testInputChild(g);
     
     return 0;
 }
